@@ -1,1 +1,10 @@
 .idea
+.pytest_cache
+.auth
+.env
+auth.json
+trace.zip
+test-results
+new_tests.csv
+allure
+/junit.xml
