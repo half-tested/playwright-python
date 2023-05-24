@@ -1,0 +1,6 @@
+playwright
+pytest-playwright
+pytest
+allure-pytest
+pytest-dotenv
+python-slugify
