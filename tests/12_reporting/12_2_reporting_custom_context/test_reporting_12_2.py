@@ -11,7 +11,11 @@ from pages.LoginPage import LoginPage
 from pages.TestCasesPage import TestCasesPage
 
 
-# pytest --alluredir=allure --clean-alluredir --allure-features=custom --screenshot=on --video=off --tracing=off
+# 1. run all tests:
+# pytest --alluredir=allure --clean-alluredir --allure-features=custom --screenshot=on --video=on --tracing=on
+
+# 2. generate report:
+# allure serve allure
 
 class Test:
     __test__ = False
@@ -55,25 +59,6 @@ def new_test_unique_data(random_string, default_user_api):
             default_user_api.delete(f"/api/tests/{test_on_backend['id']}", headers=headers)
 
 
-# @pytest.fixture()
-# def teardown_clean_test_by_name(page):
-#     tests_to_delete = list()
-#
-#     def add_to_cleanup(test_name: str):
-#         tests_to_delete.append(test_name)
-#
-#     yield add_to_cleanup
-#
-#     token = page.context.cookies()[0].get("value")
-#     headers = {"X-CSRFToken": f"{token}"}
-#     response = page.request.get("/api/tests?size=100500", headers=headers)
-#     tests = response.json()["tests"]
-#     for test_to_delete in tests_to_delete:
-#         for test_on_backend in tests:
-#             if test_to_delete == test_on_backend["name"]:
-#                 page.request.delete(f"/api/tests/{test_on_backend['id']}", headers=headers)
-
-
 @allure.feature('custom')
 def test_create_new_testcase(default_user_page, default_user_creds, new_test_unique_data):
     test_case = LoginPage(default_user_page) \
@@ -88,12 +73,12 @@ def test_create_new_testcase(default_user_page, default_user_creds, new_test_uni
 
 
 @allure.feature('custom')
-def test_case_change_status_check(default_user_page):
-    existing_test = "Successfull registration check"
+def test_case_change_status_check(default_user_page, default_user_creds):
+    existing_test = "Login test"
 
     login_page = LoginPage(default_user_page)
     login_page.navigate()
-    login_page.login("alice", "Qamania123")
+    login_page.login(default_user_creds.username, default_user_creds.password)
 
     dash_board = DashboardPage(default_user_page)
     dash_board.navigate_to_test_cases()

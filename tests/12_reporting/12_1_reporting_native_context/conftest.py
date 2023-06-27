@@ -13,14 +13,15 @@ def add_artifacts_to_allure_teardown(request):
     output_dir = request.config.getoption("--output")
     output_path = os.path.join(output_dir, truncate_file_name(slugify(request.node.nodeid)))
 
-    ext = (".png", ".webm", ".zip")
+    ext = ("png", "webm", "zip")
     if not os.path.exists(output_path):
         return
     for file in os.listdir(output_path):
         if file.endswith(ext):
             allure.attach(
                 open(os.path.join(output_path, file), 'rb').read(),
-                name=f"{file}"
+                name=f"{file}",
+                extension=file.split('.')[-1]
             )
 
 

@@ -40,8 +40,8 @@ def get_test_count(api_context: APIRequestContext):
 @pytest.fixture()
 def api(playwright, pytestconfig) -> APIRequestContext:
     payload = {
-        "username": "alice",
-        "password": "Qamania123"
+        "username": "default",
+        "password": "QADqwerty"
     }
     api_context = playwright.request.new_context(base_url=pytestconfig.getini("base_url"))
     api_context.post("/api/auth/login", data=payload)

@@ -14,14 +14,14 @@
 
 # Option #3 --> Playwright inspector available and developer tools
 # To run with breakpoint add line in the code:
-# page.close
+# page.pause()
 from playwright.sync_api import Page
 
 
 def test_example(page: Page) -> None:
     page.goto("http://127.0.0.1:8000/login")
-    page.get_by_label("Username:").fill("alice")
-    page.get_by_label("Password:").fill("Qamania123")
+    page.get_by_label("Username:").fill("default")
+    page.get_by_label("Password:").fill("QADqwerty")
     page.get_by_label("Password:").press("Enter")
     page.pause()
     page.get_by_role("link", name="Test Runs").click()

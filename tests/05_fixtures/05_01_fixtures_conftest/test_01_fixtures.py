@@ -1,13 +1,8 @@
-import random
-import string
-
-import pytest
-
 from pages.TestCasesPage import TestCasesPage
 
 
 def test_case_change_status_check(home_page):
-    existing_test = "Successfull registration check"
+    existing_test = "Status change test"
 
     home_page.navigate_to_test_cases()
 
@@ -19,20 +14,6 @@ def test_case_change_status_check(home_page):
 
     test_case.click_pass_button()
     assert test_case.get_status() == "PASS", f"status should be PASS for test '{existing_test}"''
-
-
-@pytest.fixture()
-def random_test_name():
-    random_string = ''.join(random.sample((string.ascii_uppercase + string.digits), 6))
-    test_name = f"test {random_string}"
-    return test_name
-
-
-@pytest.fixture()
-def delete_created_test(random_test_name, page):
-    yield
-    test_case = TestCasesPage(page).test_case_row_by_name(random_test_name)
-    test_case.click_delete_button()
 
 
 def test_create_new_testcase(home_page, random_test_name, delete_created_test):
@@ -49,5 +30,3 @@ def test_create_new_testcase(home_page, random_test_name, delete_created_test):
 
     assert test_case.is_displayed(), f"'{test_name}' is not in the test cases list"
     assert test_case.get_status() == "Norun", f"default status 'Norun' is not set for '{test_name}'"
-
-

@@ -5,34 +5,34 @@ from pages.LoginPage import LoginPage
 
 
 @pytest.fixture()
-def alice(page):
+def default(page):
     return LoginPage(page) \
         .navigate() \
-        .login("alice", "Qamania123")
+        .login("default", "QADqwerty")
 
 
 @pytest.fixture()
-def bob(browser_type, browser_type_launch_args, browser_context_args):
-    bob_browser = browser_type.launch(**browser_type_launch_args)
-    bob_context = bob_browser.new_context(**browser_context_args)
-    bob_page = bob_context.new_page()
+def secondary(browser_type, browser_type_launch_args, browser_context_args):
+    secondary_browser = browser_type.launch(**browser_type_launch_args)
+    secondary_context = secondary_browser.new_context(**browser_context_args)
+    secondary_page = secondary_context.new_page()
 
-    yield LoginPage(bob_page) \
+    yield LoginPage(secondary_page) \
         .navigate() \
-        .login("bob", "Qamania123")
-    bob_page.close()
-    bob_context.close()
-    bob_browser.close()
+        .login("secondary", "QASqwerty")
+    secondary_page.close()
+    secondary_context.close()
+    secondary_browser.close()
 
 
-def test_multiple_roles(alice, bob):
+def test_multiple_roles(default, secondary):
     test_case = "Multiple roles test case"
-    alice\
+    default\
         .navigate_to_create_new_test()\
-        .create_test_case(test_case, "description for bob")
-    test_case = bob\
+        .create_test_case(test_case, "description for secondary user")
+    test_case = secondary\
         .navigate_to_test_cases()\
         .test_case_row_by_name(test_case)
-    expect(test_case.locator, "Bob should see test case created by alice").to_be_visible()
+    expect(test_case.locator, "Secondary user should see test case created by default user").to_be_visible()
     test_case.click_delete_button()
-    expect(test_case.locator, "Bob should be able to delete test case created by alice").not_to_be_visible()
+    expect(test_case.locator, "Secondary user should be able to delete test case created by default user").not_to_be_visible()

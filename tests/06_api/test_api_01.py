@@ -8,8 +8,8 @@ from playwright.sync_api import Page
 @pytest.fixture()
 def login(page: Page):
     payload = {
-        "username": "alice",
-        "password": "Qamania123"
+        "username": "default",
+        "password": "QADqwerty"
     }
     page.request.post("/api/auth/login", data=payload)
 

@@ -1,6 +1,6 @@
 import hashlib
 import os
-from typing import Dict, Any, List, Generator, Callable
+from typing import Dict, Generator, Callable
 
 import allure
 import pytest
@@ -76,25 +76,21 @@ def pytest_runtest_makereport(item, call):
     report = result.get_result()
     failed = report.outcome == 'failed'
     request = item.funcargs['request']
-    # output_dir = request.config.getoption("--output")
-    # screenshot_config = request.config.getoption("--screenshot")
-    # video_config = request.config.getoption("--video")
-    # trace_config = request.config.getoption("--tracing")
 
     if call.when == "call" and "default_user_page" in item.funcargs:
         page: Page = item.funcargs["default_user_page"]
         capture_trace_if_set(page.context, failed, "default_user", item, request)
         capture_screenshot_if_set(page, failed, "default_user", item, request)
-        page.context.close()
+        page.context.close()  # make sure context closed for the video
         capture_video_if_set(page, failed, "default_user", item, request)
 
 
 def capture_video_if_set(
-    page: Page,
-    failed,
-    role: str,
-    item,
-    request: pytest.FixtureRequest
+        page: Page,
+        failed,
+        role: str,
+        item,
+        request: pytest.FixtureRequest
 ):
     video_option = request.config.getoption("--video")
     preserve_video = video_option == "on" or (
@@ -108,7 +104,8 @@ def capture_video_if_set(
             allure.attach(
                 open(path, 'rb').read(),
                 name=f"{role}-video.webm",
-                attachment_type=allure.attachment_type.WEBM
+                attachment_type=allure.attachment_type.WEBM,
+                extension="webm"
             )
             video.delete()
         except Error:
@@ -117,11 +114,11 @@ def capture_video_if_set(
 
 
 def capture_screenshot_if_set(
-    page,
-    failed,
-    role: str,
-    item,
-    request: pytest.FixtureRequest
+        page,
+        failed,
+        role: str,
+        item,
+        request: pytest.FixtureRequest
 ):
     screenshot_option = request.config.getoption("--screenshot")
     capture_screenshot = screenshot_option == "on" or (
@@ -135,18 +132,19 @@ def capture_screenshot_if_set(
             allure.attach(
                 page.screenshot(type='png'),
                 name=f"{role}-test-{human_readable_status}.png",
-                attachment_type=allure.attachment_type.PNG
+                attachment_type=allure.attachment_type.PNG,
+                extension="png"
             )
         except Error:
             pass
 
 
 def capture_trace_if_set(
-    context,
-    failed,
-    role: str,
-    item,
-    request: pytest.FixtureRequest
+        context,
+        failed,
+        role: str,
+        item,
+        request: pytest.FixtureRequest
 ):
     tracing_option = request.config.getoption("--tracing")
     capture_trace = tracing_option in ["on", "retain-on-failure"]
@@ -160,15 +158,16 @@ def capture_trace_if_set(
             allure.attach(
                 open(trace_path, 'rb').read(),
                 name=f"{role}-trace.zip",
+                extension="zip"
             )
         else:
             context.tracing.stop()
 
 
 def _build_artifact_test_folder(
-    item,
-    folder_or_file_name: str,
-    request: pytest.FixtureRequest
+        item,
+        folder_or_file_name: str,
+        request: pytest.FixtureRequest
 ) -> str:
     output_dir = request.config.getoption("--output")
     return os.path.join(output_dir, slugify(item.nodeid), folder_or_file_name)

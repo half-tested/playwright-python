@@ -1,17 +1,18 @@
 import random
 import string
 
+from pages.App import App
 from pages.DashboardPage import DashboardPage
 from pages.LoginPage import LoginPage
 from pages.TestCasesPage import TestCasesPage
 
 
 def test_case_change_status_check(page):
-    existing_test = "Successfull registration check"
+    existing_test = "Login test"
 
     login_page = LoginPage(page)
     login_page.navigate()
-    login_page.login("alice", "Qamania123")
+    login_page.login("default", "QADqwerty")
 
     dash_board = DashboardPage(page)
     dash_board.navigate_to_test_cases()
@@ -35,7 +36,7 @@ def test_create_new_testcase(page):
 
     test_case = LoginPage(page) \
         .navigate() \
-        .login("alice", "Qamania123") \
+        .login("default", "QADqwerty") \
         .navigate_to_create_new_test() \
         .create_test_case(test_name, test_description) \
         .navigate_to_test_cases() \
@@ -44,4 +45,15 @@ def test_create_new_testcase(page):
     assert test_case.is_displayed(), f"'{test_name}' is not in the test cases list"
     assert test_case.get_status() == "Norun", f"default status 'Norun' is not set for '{test_name}'"
 
-    test_case.click_delete_button()
+    test_case.click_delete_button()  # WARNING: Bad practice any interaction after assertion. Use yield fixtures.
+
+
+def test_from_meta_class(page):
+    existing_test = "Login test"
+
+    app = App(page)
+    app.login.navigate()
+    app.login.login("default", "QADqwerty")
+    app.navigate.navigate_to_test_cases()
+    assert app.test_cases.test_case_row_by_name(existing_test).is_displayed(), \
+        f"'{existing_test}' is not in the test cases list"

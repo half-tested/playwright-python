@@ -1,5 +1,6 @@
 .idea
 .pytest_cache
+.auth
 auth.json
 trace.zip
 test-results

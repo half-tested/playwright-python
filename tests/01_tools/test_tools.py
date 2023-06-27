@@ -1,7 +1,7 @@
 """
 ======================
 Test generator
-playwright codegen
+Playwright codegen
 
 1. run playwright codegen
 playwright codegen http://127.0.0.1:8000 --target=python-pytest
@@ -20,7 +20,7 @@ optional to discover:
     playwright codegen --device="iPhone 13" http://127.0.0.1:8000
 
     5. codegen useful option - geolocation, language and timezone
-    playwright open --timezone="Europe/Rome" --geolocation="41.890221,12.492348" --lang="it-IT" maps.google.com
+    playwright codegen --timezone="Europe/Rome" --geolocation="41.890221,12.492348" --lang="it-IT" maps.google.com
 
     6. codegen other options
     playwright help codegen
@@ -34,20 +34,17 @@ pytest -k test_tools.py --tracing=on
 2. view trace file
 playwright show-trace test-results/tests-01-tools-test-tools-py-test-example-chromium/trace.zip
 """
-from typing import Dict
 
-import pytest
-from playwright.sync_api import Page, BrowserType
+from playwright.sync_api import Page, expect
 
 
 def test_example(page: Page) -> None:
-    page.goto("http://127.0.0.1:8000/login")
+    page.goto("http://127.0.0.1:8000/login/?next=/")
     page.get_by_label("Username:").click()
-    page.get_by_label("Username:").fill("alice")
+    page.get_by_label("Username:").fill("default")
     page.get_by_label("Password:").click()
-    page.get_by_label("Password:").fill("Qamania123")
-    page.get_by_label("Password:").press("Enter")
-    page.get_by_role("link", name="Test Runs").click()
-
+    page.get_by_label("Password:").fill("QADqwerty")
+    page.get_by_role("button", name="Login").click()
+    page.get_by_role("link", name="logo one logo two").click()
 
 
