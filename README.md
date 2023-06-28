@@ -341,8 +341,11 @@ def login(page: Page):
     }
     page.request.post("/api/auth/login", data=payload)
 ```
-**Code examples**: [`test_api_01.py`](tests/06_api/test_api_01.py)  
-**Playwright docs**: [`API testing`](https://playwright.dev/python/docs/api-testing)   
+**Code examples**: 
+[`test_01_api_ui_mixed.py`](tests/06_api/test_01_api_ui_mixed.py)  
+**Playwright docs**: 
+[`API testing`](https://playwright.dev/python/docs/api-testing)
+[`page.request`](https://playwright.dev/python/docs/api/class-page#page-request)  
 ___
 [`API playwright.request`](#contents)
 -
@@ -373,8 +376,11 @@ def create_test_by_api(api, test_name, test_description):
     yield test_id
     api.delete(f"/api/tests/{test_id}", headers=headers)
 ```
-**Code examples**: [`test_api_02.py`](tests/06_api/test_api_02.py)  
-**Playwright docs**: [`API testing`](https://playwright.dev/python/docs/api-testing)  
+**Code examples**: 
+[`test_02_api_only.py`](tests/06_api/test_02_api_only.py)  
+**Playwright docs**: 
+[`API testing`](https://playwright.dev/python/docs/api-testing)
+[`playwright.request`](https://playwright.dev/python/docs/api/class-playwright#playwright-request)
 ___
 [`API responses validation`](#contents)
 -

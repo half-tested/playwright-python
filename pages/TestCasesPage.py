@@ -26,3 +26,6 @@ class TestCasesPage(BasePage):
     def test_case_row_by_name(self, test_name: str) -> TestCaseRow:
         locator = self.rows_by_name(test_name)
         return TestCaseRow(locator)
+
+    def totals_text(self):
+        return self.page.locator(".tableTitle span").text_content()

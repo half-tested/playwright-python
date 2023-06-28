@@ -4,6 +4,8 @@ import string
 import pytest
 from playwright.sync_api import Page
 
+from pages.App import App
+
 
 @pytest.fixture()
 def login(page: Page):
@@ -20,7 +22,7 @@ def token(login, page):
 
 
 @pytest.fixture()
-def created_test_by_api(token, page):
+def created_test_by_api(page, token):
     random_suffix = ''.join(random.sample((string.ascii_uppercase + string.digits), 6))
     test_name = f"api created test {random_suffix}"
     test_description = f"description of {test_name}"
@@ -49,10 +51,22 @@ def test_api_row_appears_for_created_test(page, created_test_by_api):
     page.pause()
 
 
-def test_api_testcases_row_counter_check(page, token, created_test_by_api):
+def test_api_testcases_row_counter_check(page, login, created_test_by_api):
     page.goto("/tests")
-    headers = {"X-CSRFToken": f"{token}"}
-    response = page.request.get("/api/tests", headers=headers)
+    response = page.request.get("/api/tests")
     total = response.json()["total"]
     assert page.locator(".tableTitle span").text_content() == f"(Total {total})"
+    page.pause()
+
+
+def test_api_initial_testcases_row_counter_check(page):
+    app = App(page)
+    app.login.navigate()
+    app.login.login("default", "QADqwerty")
+    app.navigate.navigate_to_test_cases()
+
+    response = page.request.get("/api/tests")
+    total_count = response.json()["total"]
+
+    assert app.test_cases.totals_text() == f"(Total {total_count})"
     page.pause()
