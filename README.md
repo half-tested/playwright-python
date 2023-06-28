@@ -33,7 +33,7 @@ Contents
 **&nbsp;&nbsp;&nbsp;** **4. Locators:** **&nbsp;**  **[`Locators recommended`](#locators-recommended)**__,__ **[`Locators css xpath text`](#locators-css-xpath-text)**__,__ **[`Locators filtering`](#locators-filtering)**__,__ **[`Chaining selectors`](#chaining-selectors)**__,__ **[`Frame locators`](#frame-locators)**__.__  
 **&nbsp;&nbsp;&nbsp;** **5. POM:** **&nbsp;**  **[`Page object model`](#page-object-model)**__.__  
 **&nbsp;&nbsp;&nbsp;** **6. Fixtures:** **&nbsp;**  **[`Fixtures desing`](#fixtures-design)**__,__ **[`Update fixtures`](#update-fixtures)**__.__  
-**&nbsp;&nbsp;&nbsp;** **6. API:** **&nbsp;**  **[`API page.request`](#logging-levels)**__,__ **[`API playwright.request`](#cli-logs)**__.__  
+**&nbsp;&nbsp;&nbsp;** **6. API:** **&nbsp;**  **[`API page.request`](#api-pagerequest)**__,__ **[`API playwright.request`](#api-playwrightrequest)**__.__  
 **&nbsp;&nbsp;&nbsp;** **7. Assertions:** **&nbsp;**  **[`API responses validation`](#api-responses-validation)**__,__ **[`Page validation`](#page-validation)**__,__ **[`Locator validation`](#locator-validation)**__.__  
 **&nbsp;&nbsp;&nbsp;** **8. Mock APIs:** **&nbsp;**  **[`Mock API requests`](#mock-api-requests)**__,__ **[`Modify API responses`](#modify-api-responses)**__,__ **[`Network traffic control`](#network-traffic-control)**__.__  
 **&nbsp;&nbsp;&nbsp;** **9. Events:** **&nbsp;**  **[`Waiting for event`](#waiting-for-event)**__,__ **[`Adding/removing event listener`](#addingremoving-event-listener)**__,__ **[`Adding one-off listeners`](#adding-one-off-listeners)**__.__  
@@ -236,7 +236,7 @@ Locators support an option to only select elements that have or have not a desce
 ```python
 page.get_by_role("row").filter(has=page.locator(".FAIL")).filter(has_text="secondary").get_by_role("button", name="Details").first.click()
 ```
-**Code examples**: [`test_04_locators_filtering_by_another_locator.py`](tests/03_locators/test_04_locators_filtering_by_another_locator.py)
+**Code examples**: [`test_04_locators_filtering_by_another_locator.py`](tests/03_locators/test_04_locators_filtering_by_another_locator.py)  
 **Playwright docs**: [`Locators filtering by child/descendant`](https://playwright.dev/python/docs/locators#filter-by-childdescendant)  
 ___
 [`Chaining selectors`](#contents)
