@@ -39,7 +39,7 @@ Contents
 **&nbsp;&nbsp;&nbsp;** **9. Events:** **&nbsp;**  **[`Waiting for event`](#waiting-for-event)**__,__ **[`Adding/removing event listener`](#addingremoving-event-listener)**__,__ **[`Adding one-off listeners`](#adding-one-off-listeners)**__.__  
 **&nbsp;&nbsp;&nbsp;** **10. Multiple contexts:** **&nbsp;**  **[`Multiple users`](#multiple-users)**__.__  
 **&nbsp;&nbsp;&nbsp;** **11. Emulation:** **&nbsp;**  **[`Emulate device`](#emulate-device)**__,__ **[`Emulate viewport`](#emulate-viewport)**__,__ **[`Emulate locale`](#emulate-locale)**__,__ **[`Emulate geolocation`](#emulate-geolocation)**__.__  
-**&nbsp;&nbsp;&nbsp;** **12. Reporting:** **&nbsp;**  **[`Allure basis`](#allure-basis)**__,__ **[`Allure fixture integration`](#allure-fixture-integration)**__,__ **[`Allure hook integration`](#allure-hook-integration)**__.__
+**&nbsp;&nbsp;&nbsp;** **12. Reporting:** **&nbsp;**  **[`Allure basis`](#allure-basis)**__,__ **[`Allure fixture integration`](#allure-fixture-integration)**__,__ **[`Allure hook integration`](#allure-hook-integration)**__.__  
 **&nbsp;&nbsp;&nbsp;** **13. CI/CD:** **&nbsp;**  **[`Jenkins integration`](#allure-basis)**__.__
 
 ___
