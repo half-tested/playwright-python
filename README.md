@@ -1668,7 +1668,6 @@ node {
         ])
     }
 }
-
 ```
 **Jenkins docs**:
 [`Pipeline documentation`](https://www.jenkins.io/doc/book/pipeline/)  
